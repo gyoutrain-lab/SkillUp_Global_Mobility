@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise DocToPPT Studio Pro - Suite Edition</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- Mammoth.js (DOCX) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <!-- PptxGenJS -->
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-start p-4 md:p-8 font-sans">
+
+    <div class="max-w-5xl w-full bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden mb-8">
+        
+        <!-- Header Studio -->
+        <div class="bg-slate-850 p-6 border-b border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-3 bg-indigo-600/20 text-indigo-400 rounded-xl border border-indigo-500/30">
+                    <i class="fa-solid fa-file-powerpoint text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-white tracking-wide">DocToPPT Studio Pro</h1>
+                    <p class="text-xs text-slate-400">Full Suite PPTX & PPT 2003 Engine + Live Presenter View</p>
+                </div>
+            </div>
+            <span class="text-xs font-semibold px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-full">
+                v3.5 Geometric Edition
+            </span>
+        </div>
+
+        <!-- Form Konfigurasi Utama -->
+        <div class="p-6 md:p-8 space-y-6">
+            
+            <!-- Upload Area -->
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-2">Unggah Dokumen Sumber (.txt, .docx, .pdf)</label>
+                <div class="relative border-2 border-dashed border-slate-700 hover:border-indigo-500 rounded-xl p-6 text-center transition cursor-pointer bg-slate-900/50 hover:bg-slate-850 group" id="dropZone">
+                    <input type="file" id="fileInput" accept=".txt,.docx,.pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-500 group-hover:text-indigo-400 mb-2 transition"></i>
+                    <p class="text-sm font-medium text-slate-300" id="fileNameDisplay">Klik atau seret file dokumen ke sini</p>
+                    <p class="text-xs text-slate-500 mt-1">Mendukung format TXT, Word (.docx), dan PDF</p>
+                </div>
+            </div>
+
+            <!-- Panel Pengaturan Target Slide & Template -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-2">Target Jumlah Slide</label>
+                    <select id="slideCountSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <option value="auto">Otomatis (Struktur Asli)</option>
+                        <option value="10">Padatkan ke 10 Slide</option>
+                        <option value="20">Padatkan ke 20 Slide</option>
+                        <option value="30">Padatkan ke 30 Slide</option>
+                        <option value="40">Padatkan ke 40 Slide</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-2">Template Desain</label>
+                    <select id="themeSelect" onchange="toggleCustomColorControls()" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <option value="NAVY_EXECUTIVE">Corporate Navy</option>
+                        <option value="HEALTHCARE_PRO">Medical Emerald</option>
+                        <option value="SLATE_MINIMAL">Slate Minimalist</option>
+                        <option value="LUXURY_GOLD">Onyx Gold Executive</option>
+                        <option value="MIDNIGHT_CYBER">Tech Cyber Dark</option>
+                        <option value="CREATIVE_WARM">Nordic Warm Stone</option>
+                        <option value="CUSTOM">Custom Color Scheme</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-2">Format Output</label>
+                    <select id="formatSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <option value="pptx">PowerPoint Modern (.pptx)</option>
+                        <option value="ppt2003">PowerPoint 97-2003 (.ppt)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Opsi Kustomisasi Background Style & Color Picker -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-900/40 p-4 rounded-xl border border-slate-800">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-2">Gaya Latar Geometric</label>
+                    <select id="bgPatternSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <option value="none">Flat Solid Color</option>
+                        <option value="dots">Geometric Dots Grid</option>
+                        <option value="lines">Diagonal Stripe Lines</option>
+                        <option value="mesh">Modern Mesh Gradient</option>
+                        <option value="hexagons">Hexagon Hive Pattern</option>
+                    </select>
+                </div>
+
+                <div id="customBgColorWrapper" class="hidden">
+                    <label class="block text-xs font-medium text-slate-300 mb-2">Warna Background (Custom)</label>
+                    <div class="flex items-center gap-2">
+                        <input type="color" id="customBgPicker" value="#0F172A" class="h-9 w-12 bg-transparent cursor-pointer rounded">
+                        <span class="text-xs text-slate-400">Pilih Warna Utama</span>
+                    </div>
+                </div>
+
+                <div id="customAccentColorWrapper" class="hidden">
+                    <label class="block text-xs font-medium text-slate-300 mb-2">Warna Aksentuasi (Custom)</label>
+                    <div class="flex items-center gap-2">
+                        <input type="color" id="customAccentPicker" value="#0284C7" class="h-9 w-12 bg-transparent cursor-pointer rounded">
+                        <span class="text-xs text-slate-400">Pilih Warna Accent</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Pengaturan Font, Ukuran & Bullet Style -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-2">Jenis Font Popular PPT</label>
+                    <select id="fontSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <option value="Calibri">Calibri (Standard Modern)</option>
+                        <option value="Aptos">Aptos (New Office Standard)</option>
+                        <option value="Segoe UI">Segoe UI (Clean Tech)</option>
+                        <option value="Arial">Arial (Universal)</option>
+                        <option value="Georgia">Georgia (Serif Formal)</option>
+                        <option value="Trebuchet MS">Trebuchet MS (Dynamic)</option>
+                        <option value="Helvetica">Helvetica (Classic Clean)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-2">Ukuran Font Judul</label>
+                    <select id="titleSizeSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <option value="20">20 pt (Ringkas)</option>
+                        <option value="24" selected>24 pt (Standar)</option>
+                        <option value="28">28 pt (Besar)</option>
+                        <option value="32">32 pt (Ekstra Besar)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-2">Ukuran Font Isi / Body</label>
+                    <select id="bodySizeSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <option value="12">12 pt (Kecil/Padat)</option>
+                        <option value="14" selected>14 pt (Standar)</option>
+                        <option value="16">16 pt (Sedang)</option>
+                        <option value="18">18 pt (Besar)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-2">Gaya Bullet Points</label>
+                    <select id="bulletSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <option value="•">● Circle (Standar)</option>
+                        <option value="➢">➢ Arrow Pointer</option>
+                        <option value="■">■ Square Box</option>
+                        <option value="✓">✓ Checkmark</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Panel Tombol Aksi -->
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="processAndPreview()" id="btnPreview" class="flex-1 bg-slate-800 hover:bg-slate-750 border border-slate-700 text-slate-200 font-semibold py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-eye text-indigo-400"></i>
+                    <span>Generate & Live Preview</span>
+                </button>
+                <button onclick="generatePresentation()" id="btnGenerate" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-4 rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Download File Presentation</span>
+                </button>
+            </div>
+
+            <!-- Status Indicator -->
+            <div id="status" class="hidden p-4 rounded-xl border text-sm font-medium text-center"></div>
+        </div>
+    </div>
+
+    <!-- Live Slide Thumbnails Panel -->
+    <div id="previewContainer" class="max-w-5xl w-full hidden space-y-4">
+        <div class="flex items-center justify-between">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-border-all text-indigo-400"></i>
+                Slide Thumbnails Preview
+            </h2>
+            <button onclick="startFullscreenPresentation()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center gap-2 transition">
+                <i class="fa-solid fa-play"></i>
+                <span>Start Presentation Mode</span>
+            </button>
+        </div>
+        
+        <div id="thumbnailGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <!-- Thumbnail cards injected here -->
+        </div>
+    </div>
+
+    <!-- Presentation Fullscreen Modal View -->
+    <div id="presentationModal" class="fixed inset-0 bg-black z-50 hidden flex flex-col justify-between p-6">
+        <div class="flex justify-between items-center text-slate-400 text-xs">
+            <span id="modalSlideCounter">Slide 1 of 10</span>
+            <span class="text-slate-500">Gunakan Navigasi [Arah Kiri / Kanan] | [Esc] Keluar</span>
+            <button onclick="closeFullscreenPresentation()" class="text-slate-400 hover:text-white text-lg p-1">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div id="modalSlideCanvas" class="flex-1 my-4 flex items-center justify-center">
+            <!-- Active slide full preview -->
+        </div>
+
+        <div class="flex justify-center items-center gap-4">
+            <button onclick="prevSlide()" class="p-3 bg-slate-800 hover:bg-slate-700 text-white rounded-full">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button onclick="nextSlide()" class="p-3 bg-slate-800 hover:bg-slate-700 text-white rounded-full">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const TEMPLATES = {
+            NAVY_EXECUTIVE: { bg: "0F172A", cardBg: "1E293B", accent: "0284C7", title: "38BDF8", text: "F8FAFC" },
+            HEALTHCARE_PRO: { bg: "F0FDF4", cardBg: "FFFFFF", accent: "059669", title: "065F46", text: "1F2937" },
+            SLATE_MINIMAL: { bg: "F8FAFC", cardBg: "FFFFFF", accent: "3B82F6", title: "0F172A", text: "334155" },
+            LUXURY_GOLD: { bg: "121212", cardBg: "1E1E1E", accent: "D97706", title: "FBBF24", text: "E5E7EB" },
+            MIDNIGHT_CYBER: { bg: "050B14", cardBg: "0A192F", accent: "6366F1", title: "818CF8", text: "E2E8F0" },
+            CREATIVE_WARM: { bg: "FAFAF9", cardBg: "F5F5F4", accent: "EA580C", title: "7C2D12", text: "292524" }
+        };
+
+        let generatedBlocks = [];
+        let currentSlideIndex = 0;
+
+        document.getElementById('fileInput').addEventListener('change', (e) => {
+            const fileName = e.target.files[0]?.name || 'Klik atau seret file dokumen ke sini';
+            document.getElementById('fileNameDisplay').innerText = fileName;
+        });
+
+        function toggleCustomColorControls() {
+            const isCustom = document.getElementById('themeSelect').value === 'CUSTOM';
+            document.getElementById('customBgColorWrapper').classList.toggle('hidden', !isCustom);
+            document.getElementById('customAccentColorWrapper').classList.toggle('hidden', !isCustom);
+        }
+
+        function getActiveTheme() {
+            const themeKey = document.getElementById('themeSelect').value;
+            if (themeKey === 'CUSTOM') {
+                const bgHex = document.getElementById('customBgPicker').value.replace('#', '');
+                const accentHex = document.getElementById('customAccentPicker').value.replace('#', '');
+                return {
+                    bg: bgHex,
+                    cardBg: "1E293B",
+                    accent: accentHex,
+                    title: "F8FAFC",
+                    text: "E2E8F0"
+                };
+            }
+            return TEMPLATES[themeKey];
+        }
+
+        function getGeometricStyle(patternKey, accentHex) {
+            switch(patternKey) {
+                case 'dots':
+                    return `background-image: radial-gradient(#${accentHex}40 1px, transparent 1px); background-size: 12px 12px;`;
+                case 'lines':
+                    return `background-image: repeating-linear-gradient(45deg, #${accentHex}15, #${accentHex}15 10px, transparent 10px, transparent 20px);`;
+                case 'mesh':
+                    return `background-image: radial-gradient(at 0% 0%, #${accentHex}33 0px, transparent 50%), radial-gradient(at 100% 100%, #${accentHex}22 0px, transparent 50%);`;
+                case 'hexagons':
+                    return `background-image: radial-gradient(#${accentHex}30 2px, transparent 2px), radial-gradient(#${accentHex}30 2px, transparent 2px); background-size: 20px 20px; background-position: 0 0, 10px 10px;`;
+                default:
+                    return '';
+            }
+        }
+
+        function compactBlocks(blocks, targetCount) {
+            if (targetCount === 'auto' || blocks.length === 0) return blocks;
+            const target = parseInt(targetCount, 10);
+            if (blocks.length <= target) return blocks;
+
+            const chunkSize = Math.ceil(blocks.length / target);
+            let compacted = [];
+
+            for (let i = 0; i < blocks.length; i += chunkSize) {
+                const group = blocks.slice(i, i + chunkSize);
+                let titleLine = group[0].trim().split('\n')[0].replace(/^[#*-\s]+/, '');
+                
+                let combinedItems = [];
+                group.forEach((block, idx) => {
+                    const lines = block.trim().split('\n');
+                    lines.forEach((line, lIdx) => {
+                        if (idx === 0 && lIdx === 0) return;
+                        const cleaned = line.replace(/^[#*-\s]+/, '').trim();
+                        if (cleaned.length > 0) combinedItems.push(cleaned);
+                    });
+                });
+
+                let compactedBlock = titleLine;
+                if (combinedItems.length > 0) compactedBlock += '\n' + combinedItems.join('\n');
+                compacted.push(compactedBlock);
+            }
+            return compacted;
+        }
+
+        async function extractTextFromFile(file) {
+            let textContent = '';
+            if (file.name.endsWith('.txt')) {
+                textContent = await file.text();
+            } else if (file.name.endsWith('.docx')) {
+                const arrayBuffer = await file.arrayBuffer();
+                const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+                textContent = result.value;
+            } else if (file.name.endsWith('.pdf')) {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const text = await page.getTextContent();
+                    textContent += text.items.map(item => item.str).join(' ') + '\n\n';
+                }
+            }
+            return textContent;
+        }
+
+        async function processAndPreview() {
+            const fileInput = document.getElementById('fileInput');
+            if (!fileInput.files[0]) {
+                showStatus('Pilih file dokumen terlebih dahulu!', 'error');
+                return;
+            }
+
+            showStatus('Menganalisis dokumen dan membuat pratinjau...', 'info');
+
+            try {
+                const textContent = await extractTextFromFile(fileInput.files[0]);
+                let rawBlocks = textContent.split(/\n\s*\n/).filter(b => b.trim().length > 0);
+                const targetSlideCount = document.getElementById('slideCountSelect').value;
+                generatedBlocks = compactBlocks(rawBlocks, targetSlideCount);
+
+                renderThumbnails();
+                showStatus(`Berhasil memuat ${generatedBlocks.length} slide thumbnail preview!`, 'success');
+            } catch (err) {
+                showStatus('Gagal memproses file: ' + err.message, 'error');
+            }
+        }
+
+        function renderThumbnails() {
+            const grid = document.getElementById('thumbnailGrid');
+            const t = getActiveTheme();
+            const patternKey = document.getElementById('bgPatternSelect').value;
+            const geoCss = getGeometricStyle(patternKey, t.accent);
+            const bulletStyle = document.getElementById('bulletSelect').value;
+            const fontStyle = document.getElementById('fontSelect').value;
+
+            grid.innerHTML = '';
+
+            generatedBlocks.forEach((block, idx) => {
+                const lines = block.trim().split('\n').filter(l => l.trim().length > 0);
+                const title = lines[0].replace(/^[#*-\s]+/, '').substring(0, 50);
+                const items = lines.slice(1, 4);
+
+                let cardHtml = `
+                    <div onclick="openFullscreenAt(${idx})" class="aspect-video p-3 rounded-lg border cursor-pointer hover:border-indigo-500 transition relative flex flex-col justify-between overflow-hidden shadow" 
+                         style="background-color: #${t.bg}; ${geoCss} font-family: '${fontStyle}', sans-serif;">
+                        <div class="rounded p-2 h-full flex flex-col justify-between" style="background-color: #${t.cardBg}; border-left: 3px solid #${t.accent};">
+                            <div>
+                                <h3 class="font-bold text-xs line-clamp-1 mb-1" style="color: #${t.title};">${title}</h3>
+                                <ul class="text-[9px] space-y-0.5" style="color: #${t.text};">
+                                    ${items.map(i => `<li class="line-clamp-1">${bulletStyle} ${i.replace(/^[#*-\s]+/, '')}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <span class="text-[8px] text-right font-medium" style="color: #${t.text};">Slide ${idx + 1}</span>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHtml;
+            });
+
+            document.getElementById('previewContainer').classList.remove('hidden');
+        }
+
+        function startFullscreenPresentation() {
+            if (generatedBlocks.length === 0) return;
+            currentSlideIndex = 0;
+            updatePresentationModal();
+            document.getElementById('presentationModal').classList.remove('hidden');
+        }
+
+        function openFullscreenAt(index) {
+            currentSlideIndex = index;
+            updatePresentationModal();
+            document.getElementById('presentationModal').classList.remove('hidden');
+        }
+
+        function closeFullscreenPresentation() {
+            document.getElementById('presentationModal').classList.add('hidden');
+        }
+
+        function updatePresentationModal() {
+            const canvas = document.getElementById('modalSlideCanvas');
+            const counter = document.getElementById('modalSlideCounter');
+            const t = getActiveTheme();
+            const patternKey = document.getElementById('bgPatternSelect').value;
+            const geoCss = getGeometricStyle(patternKey, t.accent);
+            const bulletStyle = document.getElementById('bulletSelect').value;
+            const fontStyle = document.getElementById('fontSelect').value;
+            const titleSize = document.getElementById('titleSizeSelect').value;
+            const bodySize = document.getElementById('bodySizeSelect').value;
+
+            const block = generatedBlocks[currentSlideIndex];
+            const lines = block.trim().split('\n').filter(l => l.trim().length > 0);
+            const title = lines[0].replace(/^[#*-\s]+/, '');
+            const items = lines.slice(1);
+
+            counter.innerText = `Slide ${currentSlideIndex + 1} of ${generatedBlocks.length}`;
+
+            canvas.innerHTML = `
+                <div class="w-full max-w-4xl aspect-video rounded-xl p-8 flex flex-col justify-between shadow-2xl transition"
+                     style="background-color: #${t.bg}; ${geoCss} font-family: '${fontStyle}', sans-serif;">
+                    <div class="h-full rounded-lg p-6 flex flex-col justify-start" style="background-color: #${t.cardBg}; border-left: 6px solid #${t.accent};">
+                        <h1 class="font-bold mb-4" style="color: #${t.title}; font-size: ${titleSize}px;">${title}</h1>
+                        <ul class="space-y-2 overflow-y-auto" style="color: #${t.text}; font-size: ${bodySize}px;">
+                            ${items.map(i => `<li>${bulletStyle} ${i.replace(/^[#*-\s]+/, '')}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updatePresentationModal();
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < generatedBlocks.length - 1) {
+                currentSlideIndex++;
+                updatePresentationModal();
+            }
+        }
+
+        window.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('presentationModal');
+            if (!modal.classList.contains('hidden')) {
+                if (e.key === 'ArrowRight') nextSlide();
+                if (e.key === 'ArrowLeft') prevSlide();
+                if (e.key === 'Escape') closeFullscreenPresentation();
+            }
+        });
+
+        async function generatePresentation() {
+            const fileInput = document.getElementById('fileInput');
+            if (!fileInput.files[0]) {
+                showStatus('Pilih file dokumen terlebih dahulu!', 'error');
+                return;
+            }
+
+            const fontStyle = document.getElementById('fontSelect').value;
+            const exportFormat = document.getElementById('formatSelect').value;
+            const targetSlideCount = document.getElementById('slideCountSelect').value;
+            const titleSize = parseInt(document.getElementById('titleSizeSelect').value, 10);
+            const bodySize = parseInt(document.getElementById('bodySizeSelect').value, 10);
+            const t = getActiveTheme();
+
+            showStatus('Mengunduh dan mengekspor presentasi...', 'info');
+
+            try {
+                if (generatedBlocks.length === 0) {
+                    const textContent = await extractTextFromFile(fileInput.files[0]);
+                    let rawBlocks = textContent.split(/\n\s*\n/).filter(b => b.trim().length > 0);
+                    generatedBlocks = compactBlocks(rawBlocks, targetSlideCount);
+                }
+
+                if (exportFormat === 'ppt2003') {
+                    generatePPT2003File(generatedBlocks, fontStyle, t.title, t.text, t.bg, t.cardBg, t.accent);
+                } else {
+                    let pptx = new PptxGenJS();
+                    pptx.layout = 'LAYOUT_16x9';
+
+                    generatedBlocks.forEach((block, index) => {
+                        const lines = block.trim().split('\n').filter(l => l.trim().length > 0);
+                        if (lines.length === 0) return;
+
+                        let slide = pptx.addSlide();
+                        slide.background = { color: t.bg };
+
+                        slide.addShape(pptx.shapes.RECTANGLE, {
+                            x: 0, y: 0, w: '100%', h: 0.15,
+                            fill: { color: t.accent }
+                        });
+
+                        slide.addShape(pptx.shapes.ROUNDED_RECTANGLE, {
+                            x: 0.8, y: 0.8, w: 11.7, h: 5.9,
+                            fill: { color: t.cardBg },
+                            line: { color: t.accent, width: 1 },
+                            rectRadius: 0.08
+                        });
+
+                        const title = lines[0].replace(/^[#*-\s]+/, '').substring(0, 90);
+                        let bodyItems = lines.slice(1);
+
+                        slide.addText(title, {
+                            x: 1.2, y: 1.1, w: 10.9, h: 0.8,
+                            fontSize: titleSize, bold: true,
+                            color: t.title, fontFace: fontStyle
+                        });
+
+                        if (bodyItems.length > 0) {
+                            const formattedText = bodyItems.slice(0, 8).map(item => ({
+                                text: item.replace(/^[*-\s]+/, '').trim(),
+                                options: { bullet: true, inset: 0.2 }
+                            }));
+
+                            slide.addText(formattedText, {
+                                x: 1.2, y: 2.0, w: 10.9, h: 4.2,
+                                fontSize: bodySize, color: t.text,
+                                fontFace: fontStyle, lineSpacing: 20
+                            });
+                        }
+
+                        slide.addText(`Slide ${index + 1} of ${generatedBlocks.length}`, {
+                            x: 10.0, y: 6.2, w: 2.2, h: 0.3,
+                            fontSize: 10, color: t.text, fontFace: fontStyle, align: 'right'
+                        });
+                    });
+
+                    await pptx.writeFile({ fileName: `Presentation_${generatedBlocks.length}_Slides.pptx` });
+                }
+
+                showStatus(`Selesai! File berhasil diunduh.`, 'success');
+            } catch (err) {
+                showStatus('Gagal memproses file: ' + err.message, 'error');
+            }
+        }
+
+        function generatePPT2003File(blocks, fontStyle, titleHex, bodyHex, bgHex, cardHex, accentHex) {
+            let slideHtmlContent = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:p="urn:schemas-microsoft-com:office:powerpoint" xmlns="http://www.w3.org/TR/REC-html40">
+            <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="ProgId" content="PowerPoint.Slide">
+            <style>
+                body { font-family: '${fontStyle}', sans-serif; background-color: #${bgHex}; margin:0; padding:0; }
+                .slide { page-break-after: always; width: 1000px; height: 562px; padding: 40px; box-sizing: border-box; background-color: #${bgHex}; position: relative; }
+                .card { background-color: #${cardHex}; border-left: 6px solid #${accentHex}; border-radius: 8px; padding: 30px; height: 100%; box-sizing: border-box; }
+                h1 { color: #${titleHex}; font-size: 26px; margin-top: 0; }
+                ul { color: #${bodyHex}; font-size: 16px; line-height: 1.6; }
+                li { margin-bottom: 8px; }
+            </style></head><body>`;
+
+            blocks.forEach((block, index) => {
+                const lines = block.trim().split('\n').filter(l => l.trim().length > 0);
+                if (lines.length === 0) return;
+                const title = lines[0].replace(/^[#*-\s]+/, '');
+                const items = lines.slice(1);
+
+                slideHtmlContent += `<div class="slide"><div class="card"><h1>${title}</h1>`;
+                if (items.length > 0) {
+                    slideHtmlContent += `<ul>`;
+                    items.forEach(item => { slideHtmlContent += `<li>${item.replace(/^[#*-\s]+/, '').trim()}</li>`; });
+                    slideHtmlContent += `</ul>`;
+                }
+                slideHtmlContent += `</div></div>`;
+            });
+
+            slideHtmlContent += `</body></html>`;
+            const blob = new Blob([slideHtmlContent], { type: 'application/vnd.ms-powerpoint' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `Presentation_Legacy_2003.ppt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.classList.remove('hidden', 'bg-indigo-500/10', 'text-indigo-400', 'border-indigo-500/20', 'bg-red-500/10', 'text-red-400', 'border-red-500/20', 'bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/20');
+            if (type === 'error') status.classList.add('bg-red-500/10', 'text-red-400', 'border-red-500/20');
+            else if (type === 'success') status.classList.add('bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/20');
+            else status.classList.add('bg-indigo-500/10', 'text-indigo-400', 'border-indigo-500/20');
+            status.innerText = message;
+        }
+    </script>
+</body>
+</html>
