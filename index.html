@@ -3,585 +3,517 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise DocToPPT Studio Pro - Suite Edition</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- PDF.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <!-- Mammoth.js (DOCX) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-    <!-- PptxGenJS -->
-    <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+    <title>Sistem Evaluasi Modul Global Mobility & Legal Compliance</title>
+    <style>
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #006699;
+            --accent-color: #28a745;
+            --disabled-color: #6c757d;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-size: 24px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 0;
+        }
+
+        .user-card {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .section-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            background: #fafafa;
+        }
+
+        .section-card.disabled {
+            opacity: 0.6;
+            pointer-events: none;
+            background: #e9ecef;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #fff;
+            margin-left: 10px;
+        }
+
+        .badge-locked { background: var(--disabled-color); }
+        .badge-active { background: var(--accent-color); }
+        .badge-done { background: var(--primary-color); }
+
+        .question-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .options-list li {
+            margin-bottom: 8px;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn:disabled {
+            background-color: var(--disabled-color);
+            cursor: not-allowed;
+        }
+
+        .result-box {
+            display: none;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .score-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #b1dfbb;
+        }
+
+        .score-num {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .hidden { display: none; }
+    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-start p-4 md:p-8 font-sans">
+<body>
 
-    <div class="max-w-5xl w-full bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden mb-8">
+<div class="container">
+    <header>
+        <h1>SISTEM EVALUASI MODUL PELATIHAN</h1>
+        <h2>Global Mobility & Legal Compliance for Indonesian Nurses</h2>
+    </header>
+
+    <!-- FORM IDENTITAS TEST TAKER ID -->
+    <div class="user-card" id="userFormSection">
+        <h3>Registrasi Test Taker ID</h3>
+        <div class="form-group">
+            <label for="testTakerID">Test Taker ID / NIRS / NIK:</label>
+            <input type="text" id="testTakerID" placeholder="Masukkan ID unik Anda (Contoh: RN-2026-001)" required>
+        </div>
+        <div class="form-group">
+            <label for="fullName">Nama Lengkap & Gelar:</label>
+            <input type="text" id="fullName" placeholder="Masukkan nama lengkap" required>
+        </div>
+        <button class="btn" onclick="registerUser()">Mulai Sesi Evaluasi</button>
+    </div>
+
+    <!-- PRE-TEST SECTION (50 SOAL) -->
+    <div id="examContainer" class="hidden">
+        <div class="section-card" id="preTestCard">
+            <h3>1. Pre-Test Assessment <span class="badge badge-active" id="preTestBadge">Aktif</span></h3>
+            <p>Selesaikan 50 soal pre-test di bawah ini untuk mengukur pemahaman awal Anda sebelum modul dibuka[cite: 2].</p>
+            <form id="preTestForm"></form>
+            <button class="btn" id="btnSubmitPreTest" onclick="submitPreTest()" style="margin-top: 15px;">Kirim Jawaban Pre-Test</button>
+        </div>
+
+        <!-- POST-TEST SECTION (50 SOAL) - TERKUNCI AWALNYA -->
+        <div class="section-card disabled" id="postTestCard">
+            <h3>2. Post-Test Assessment <span class="badge badge-locked" id="postTestBadge">Terkunci</span></h3>
+            <p>Post-Test akan terbuka secara otomatis setelah Anda menyelesaikan dan mengirimkan jawaban Pre-Test[cite: 2].</p>
+            <form id="postTestForm"></form>
+            <button class="btn" id="btnSubmitPostTest" onclick="submitPostTest()" style="margin-top: 15px;" disabled>Kirim Jawaban Post-Test</button>
+        </div>
+    </div>
+
+    <!-- RESULT DASHBOARD -->
+    <div class="result-box" id="resultDashboard">
+        <h3>Laporan Hasil Evaluasi (Test Result)</h3>
+        <p><strong>Test Taker ID:</strong> <span id="resID">-</span></p>
+        <p><strong>Nama Peserta:</strong> <span id="resName">-</span></p>
+        <p><strong>Waktu Selesai:</strong> <span id="resTime">-</span></p>
+
+        <div class="score-grid">
+            <div class="score-card">
+                <h4>Skor Pre-Test</h4>
+                <div class="score-num" id="resPreScore">0 / 100</div>
+                <p id="resPreCorrect">0 dari 50 soal benar</p>
+            </div>
+            <div class="score-card">
+                <h4>Skor Post-Test</h4>
+                <div class="score-num" id="resPostScore">0 / 100</div>
+                <p id="resPostCorrect">0 dari 50 soal benar</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 15px; background: #fff; border-radius: 6px;">
+            <h4>Analisis Peningkatan Kompetensi (Gain Score):</h4>
+            <p id="resGainText">-</p>
+        </div>
+    </div>
+</div>
+
+<script>
+// DATABASE SOAL PRE-TEST & POST-TEST (50 SOAL MCQ PER SEKSI)
+const preTestQuestions = [
+    { id: 1, q: "Seorang perawat ditawari kerja ke luar negeri. Agensi meminta biaya Rp15.000.000 untuk pengurusan visa. Berdasarkan WHO Global Code of Practice, ini melanggar:", options: ["Equal Treatment Principle", "Employer-Pays Principle", "Red-List Protection", "Brain Drain Mitigation"], ans: 1 },
+    { id: 2, q: "Skema penempatan kerja dengan kepastian hukum dan pelindungan diplomatik tertinggi antar-pemerintah adalah:", options: ["Private-to-Private (P2P)", "Government-to-Government (G2G)", "Specified Skilled Worker (SSW)", "Walk-in Recruitment"], ans: 1 },
+    { id: 3, q: "Tujuan utama WHO mempublikasikan Health Workforce Support and Safeguards List (Daftar Merah) adalah:", options: ["Melarang seluruh perawat migrasi", "Membatasi rekrutmen aktif dari negara yang krisis tenaga kesehatan", "Menetapkan gaji minimum", "Menghapus ujian lisensi"], ans: 1 },
+    { id: 4, q: "Perawat migran di UK menerima tunjangan lembur lebih kecil dibanding perawat lokal pada jenjang Band 5. Ini melanggar:", options: ["Employer-Pays Principle", "Equal Treatment Principle", "Whistleblowing Protocol", "Cultural Safety"], ans: 1 },
+    { id: 5, q: "Langkah verifikasi awal calon perawat sebelum penandatanganan dokumen di jalur P2P adalah:", options: ["Transfer DP ke agen", "Memeriksa keabsahan P3MI di portal SISKOP2MI/BP2MI", "Menyerahkan paspor asli", "Membeli tiket mandiri"], ans: 1 },
+    { id: 6, q: "Skema SSW (Tokutei Ginou) Jepang menekankan dua syarat utama, yaitu:", options: ["S2 Keperawatan & Pengalaman 5 tahun", "Uji Kompetensi Teknis & Sertifikasi Bahasa", "Rekomendasi Parpol", "Bebas ujian lisensi"], ans: 1 },
+    { id: 7, q: "Proses verifikasi dokumen akademik dan STR langsung ke instansi penerbit oleh DataFlow/CGFNS disebut:", options: ["Gap Analysis", "Primary Source Verification (PSV)", "Peer Review", "Credential Assessment"], ans: 1 },
+    { id: 8, q: "Total 4 SKS Praktik Klinik KMB setara dengan berapa jam klinik (Clock Hours) internasional?", options: ["68 Jam", "102 Jam", "204 Jam", "300 Jam"], ans: 2 },
+    { id: 9, q: "Ujian Next Generation NCLEX (NGN) berfokus pada pengujian:", options: ["Hafalan rumus obat", "Clinical Judgment Measurement Model (NCJMM)", "Keterampilan mengetik", "Sejarah medis"], ans: 1 },
+    { id: 10, q: "Tahapan evaluasi praktik klinis OSCE NMC Inggris meliputi siklus:", options: ["SOAP", "APIE (Assessment, Planning, Implementation, Evaluation)", "SBAR", "ADIME"], ans: 1 },
+    { id: 11, q: "Dokter memberikan instruksi verbal dosis tinggi via telepon tanpa bukti tertulis. Sikap perawat yang paling tepat:", options: ["Langsung memberikan obat", "Menahan obat, komunikasi SBAR, dan minta instruksi tertulis", "Menyuruh perawat lain", "Mengubah dosis sendiri"], ans: 1 },
+    { id: 12, q: "Manakah yang BUKAN merupakan salah satu dari 4 elemen pembuktian malpraktik medis?", options: ["Duty of Care", "Breach of Duty", "Causation", "Profit Margin"], ans: 3 },
+    { id: 13, q: "Edukasi kesehatan mandiri dan perawatan luka steril oleh perawat tergolong wewenang:", options: ["Dependent Function", "Independent Nursing Function", "Delegated Task", "Unlawful Task"], ans: 1 },
+    { id: 14, q: "Jika terdapat perbedaan ejaan nama antara Paspor dan STR saat verifikasi DataFlow, solusinya:", options: ["Mengubah paspor pakai tipe-x", "Melampirkan Surat Keterangan Beda Nama resmi", "Mengabaikan saja", "Membatalkan lisensi"], ans: 1 },
+    { id: 15, q: "Nominal gaji sebelum dipotong pajak, asuransi, dan dana pensiun disebut:", options: ["Net Take-Home Pay", "Gross Salary", "Severance Pay", "Basic Allowance"], ans: 1 },
+    { id: 16, q: "Klausul denda resign kaku $15.000 tanpa memandang sisa masa kerja dikategorikan sebagai:", options: ["Fair Repayment", "Predatory Clawback / Unreasonable Penalty", "Standard Bonus", "Legitimate Tax"], ans: 1 },
+    { id: 17, q: "Berdasarkan aturan ketenagakerjaan GCC, penahanan paspor asli perawat oleh employer merupakan:", options: ["Prosedur standar", "Pelanggaran hukum berat & indikator Forced Labour", "Hak mutlak majikan", "Syarat pencairan gaji"], ans: 1 },
+    { id: 18, q: "Masa tenggang (Curtailment Period) perawat yang di-PHK di UK untuk mencari sponsor baru adalah:", options: ["14 Hari", "30 Hari", "60 Hari", "90 Hari"], ans: 2 },
+    { id: 19, q: "Pemotongan gaji yang sah (lawful deduction) wajib memenuhi syarat:", options: ["Disetujui sepihak direktur", "Tercantum dalam UU atau disetujui tertulis oleh pekerja", "Dipotong dari keluarga", "Minimal 50% gaji"], ans: 1 },
+    { id: 20, q: "Sistem skala gaji terstandar untuk Registered Nurse pemula di NHS Inggris dimulai pada:", options: ["Band 2", "Band 3", "Band 5", "Band 8"], ans: 2 },
+    { id: 21, q: "Indikator utama TPPO/Forced Labour menurut ILO pada rekrutmen perawat adalah:", options: ["Gaji via transfer bank", "Penahanan paspor, pembatasan komunikasi, utang fiktif", "Hak cuti tahunan", "Asuransi keluarga"], ans: 1 },
+    { id: 22, q: "Saluran pelaporan resmi internal RS untuk melaporkan pelanggaran keselamatan pasien disebut:", options: ["Social Media Page", "Whistleblowing Channel / Freedom to Speak Up Guardian", "Press Release", "Forum Chat"], ans: 1 },
+    { id: 23, q: "Langkah digital safeguard sebelum berangkat ke luar negeri adalah:", options: ["Hapus file ponsel", "Unggah salinan dokumen ke cloud & Lapor Diri Kemlu", "Beri password email ke agen", "Matikan GPS"], ans: 1 },
+    { id: 24, q: "Jika paspor ditahan secara ilegal dan dihilangkan, KBRI/KJRI dapat menerbitkan:", options: ["Paspor Diplomatik", "Surat Perjalanan Laksana Paspor (SPLP)", "Green Card", "KTP Luar Negeri"], ans: 1 },
+    { id: 25, q: "Pelayanan keperawatan yang menghormati identitas budaya dan agama pasien tanpa diskriminasi dinamakan:", options: ["Cultural Safety", "Clinical Audit", "Assimilation", "Ethical Isolation"], ans: 0 },
+    // Soal 26 - 50 (Variasi & Penguatan Kasus)
+    { id: 26, q: "Prinsip utama WHO Code of Practice menetapkan bahwa rekrutmen kesehatan global harus menjunjung:", options: ["Keuntungan finansial agensi", "Etika, transparansi, dan kesetaraan hak", "Monopoli negara maju", "Eksploitasi tenaga kerja"], ans: 1 },
+    { id: 27, q: "Skema penempatan Triple Win Jerman termasuk dalam kategori:", options: ["P2P", "G2G", "SSW", "Freelance"], ans: 1 },
+    { id: 28, q: "Program IJEPA Jepang menggunakan bentuk kerjasama bilateral:", options: ["Private Agreement", "Government-to-Government (G2G)", "Direct Hiring", "Commercial Contract"], ans: 1 },
+    { id: 29, q: "Verifikasi ijazah dan STR oleh lembaga DataFlow ditujukan untuk wilayah kerja:", options: ["Kawasan GCC / Timur Tengah", "Amerika Serikat", "Inggris", "Australia"], ans: 0 },
+    { id: 30, q: "Verifikasi kredensial perawat untuk wilayah Amerika Serikat umumnya dilakukan oleh:", options: ["DataFlow Group", "CGFNS / WES", "Prometric UK", "BP2MI"], ans: 1 },
+    { id: 31, q: "Rumus perhitungan konversi jam klinik adalah 1 SKS Praktik Klinik = ... Clock Hours.", options: ["17", "34", "51", "68"], ans: 2 },
+    { id: 32, q: "Ujian Prometric SCFHS digunakan untuk memberikan sertifikasi lisensi perawat di negara:", options: ["Inggris", "Arab Saudi", "Jepang", "Jerman"], ans: 1 },
+    { id: 33, q: "Ujian CBT pada NMC Test of Competence Inggris menguji materi:", options: ["Keterampilan motorik langsung", "Teori klinis, safeguarding, & kalkulasi dosis", "Bahasa Jerman", "Hukum pidana lokal"], ans: 1 },
+    { id: 34, q: "Pelaksanaan tugas kolaboratif perawat (Collaborative Function) meliputi tindakan:", options: ["Pengkajian kebutuhan mandiri", "Pemberian obat resep dan tindakan medis terdelegasi", "Penyusunan diagnosis keperawatan", "Edukasi kebersihan diri"], ans: 1 },
+    { id: 35, q: "Metode komunikasi efektif saat melaporkan penurunan kondisi pasien secara kritis adalah:", options: ["SOAP", "SBAR", "APIE", "ADIME"], ans: 1 },
+    { id: 36, q: "Komponen SBAR yang menjelaskan kondisi terkini dan tanda-tanda vital pasien adalah:", options: ["Situation", "Background", "Assessment", "Recommendation"], ans: 0 },
+    { id: 37, q: "Komponen SBAR yang menyampaikan usulan perawat terkait tindakan selanjutnya adalah:", options: ["Situation", "Background", "Assessment", "Recommendation"], ans: 3 },
+    { id: 38, q: "Elemen malpraktik 'Breach of Duty' artinya:", options: ["Adanya kewajiban merawat", "Pelanggaran terhadap standar pelayanan yang berlaku", "Adanya keuntungan keuangan", "Kerugian emosional ringan"], ans: 1 },
+    { id: 39, q: "Elemen malpraktik 'Causation' membuktikan bahwa:", options: ["Perawat memiliki STR aktif", "Pelanggaran standar secara langsung menyebabkan cedera pada pasien", "Pasien membayar biaya RS", "Dokter hadir di ruangan"], ans: 1 },
+    { id: 40, q: "Definisi 'Net Take-Home Pay' adalah:", options: ["Gaji sebelum dipotong pajak", "Gaji bersih yang diterima di rekening bank", "Total bonus tahunan", "Uang makan mingguan"], ans: 1 },
+    { id: 41, q: "Reformasi Sistem Kafala di Arab Saudi memfasilitasi pindah sponsor melalui portal resmi:", options: ["Absher", "Qiwa", "Sehaty", "Tawakkalna"], ans: 1 },
+    { id: 42, q: "EU Working Time Directive membatasi jam kerja maksimal per minggu di Eropa sebesar:", options: ["35 Jam", "40 Jam", "48 Jam", "60 Jam"], ans: 2 },
+    { id: 43, q: "Hak kerja penuh bagi pasangan perawat pemegang Dependent Visa disebut:", options: ["Spousal Work Permit", "Tourist Entry Permit", "Diplomatic Immunity", "Business Visa"], ans: 0 },
+    { id: 44, q: "Jika majikan menahan paspor secara ilegal, perawat dapat melaporkan ke badan BP2MI via hotline:", options: ["110", "119", "137", "140"], ans: 2 },
+    { id: 45, q: "Fitur portal resmi pemerintah Indonesia untuk pendataan WNI di luar negeri adalah:", options: ["Lapor Diri Kemlu (peduliwni.kemlu.go.id)", "SatuSehat", "KerjaSamaku", "Sintesa"], ans: 0 },
+    { id: 46, q: "Ancaman deportasi atau intimidasi jika menolak lembur tanpa bayaran tergolong bentuk:", options: ["Manajemen disiplin", "Eksploitasi & Kerja Paksa (Forced Labour)", "Pelatihan mental", "Prosedur evaluasi"], ans: 1 },
+    { id: 47, q: "Undang-undang pelindungan Whistleblower bertujuan untuk:", options: ["Melindungi pelapor dari tindakan balasan/pemecatan sepihak", "Memberikan hadiah finansial", "Menghapus lisensi perawat", "Mempublikasikan nama pelapor"], ans: 0 },
+    { id: 48, q: "Organisasi profesi perawat di Inggris yang menyediakan pendampingan hukum adalah:", options: ["ANA", "RCN (Royal College of Nursing)", "PPNI", "ICN"], ans: 1 },
+    { id: 49, q: "Syarat denda clawback yang adil wajib memperhitungkan prinsip:", options: ["Pro-rata reduction (penyusutan masa kerja)", "Nilai ganda setiap tahun", "Pembayaran tunai dalam 1 hari", "Bunga 50%"], ans: 0 },
+    { id: 50, q: "Tujuan utama sertifikasi dan lisensi internasional bagi perawat Indonesia adalah:", options: ["Menghindari pajak lokal", "Menjamin mutu pelayanan, keselamatan pasien, dan legalitas profesi", "Mempermudah liburan", "Mendapatkan kewarganegaraan ganda"], ans: 1 }
+];
+
+// POST-TEST QUESTIONS (50 SOAL MCQ DENGAN BOBOT DAN KASUS LEBIH MENDALAM)
+const postTestQuestions = [
+    { id: 1, q: "Sebuah agensi P2P memotong gaji perawat $300/bulan selama setahun untuk 'biaya pemrosesan visa'. Tindakan ini melanggar:", options: ["Equal Treatment Principle", "Employer-Pays Principle", "Red-List Protection", "Cultural Safety"], ans: 1 },
+    { id: 2, q: "Manakah skema penempatan yang menjamin kepastian hukum bilateral melalui MoU antar-pemerintah?", options: ["P2P", "G2G", "SSW Mandiri", "Direct Recruitment"], ans: 1 },
+    { id: 3, q: "Fungsi utama Health Workforce Support and Safeguards List WHO adalah:", options: ["Mendorong brain drain", "Mencegah rekrutmen aktif di negara yang krisis rasio perawat", "Menghapus STR", "Menaikkan biaya visa"], ans: 1 },
+    { id: 4, q: "Perawat migran Indonesia yang mendapat gaji kotor lebih rendah dari perawat lokal di grade NHS yang sama mengalami pelanggaran:", options: ["Employer-Pays Principle", "Equal Treatment Principle", "Freedom of Association", "Whistleblowing Protection"], ans: 1 },
+    { id: 5, q: "Sebelum menandatangani Perjanjian Penempatan P2P, langkah awal audit yang wajib dilakukan adalah:", options: ["Bayar DP", "Cek izin P3MI di SISKOP2MI/BP2MI", "Serahkan paspor", "Beli tiket"], ans: 1 },
+    { id: 6, q: "Dua komponen kelulusan wajib pada program SSW / Tokutei Ginou Kaigo Jepang adalah:", options: ["S2 & Pengalaman 10 tahun", "Uji Kompetensi Teknis & Sertifikat Kemampuan Bahasa", "Rekomendasi KBRI", "NCLEX-RN"], ans: 1 },
+    { id: 7, q: "Lembaga verifikasi Primary Source Verification (PSV) menghubungi instansi mana untuk mengecek keabsahan ijazah?", options: ["Kementerian Keuangan", "Kampus / Institusi Penerbit Asli", "Kedutaan Asing", "Agensi Swasta"], ans: 1 },
+    { id: 8, q: "Perawat dengan 3 SKS Praktik Klinik Keperawatan Anak memiliki konversi Clock Hours sebesar:", options: ["51 Jam", "102 Jam", "153 Jam", "204 Jam"], ans: 2 },
+    { id: 9, q: "Fokus utama penilaian pada model Next Generation NCLEX (NGN) adalah:", options: ["Hafalan nama latin", "Clinical Judgment Measurement Model (NCJMM)", "Ketrampilan administrasi", "Kalkulasi manual"], ans: 1 },
+    { id: 10, q: "Stasiun ujian OSCE NMC di Inggris menilai siklus keperawatan utuh yang dikenal dengan:", options: ["SOAP", "APIE (Assessment, Planning, Implementation, Evaluation)", "SBAR", "ADIME"], ans: 1 },
+    { id: 11, q: "Saat menerima instruksi verbal obat berisiko dari dokter via telepon, perawat wajib menerapkan protokol:", options: ["Langsung injeksi", "SBAR dan Read-Back Policy serta verifikasi tertulis", "Abaikan panggilan", "Ubah dosis"], ans: 1 },
+    { id: 12, q: "Salah satu dari 4 elemen hukum pembuktian malpraktik medis adalah 'Breach of Duty', yang berarti:", options: ["Adanya hubungan perawat-pasien", "Pelanggaran terhadap standar pelayanan keperawatan", "Kerugian fisik finansial", "Keuntungan rumah sakit"], ans: 1 },
+    { id: 13, q: "Tindakan pengkajian fisik awal dan intervensi keperawatan mandiri merupakan wewenang:", options: ["Dependent Function", "Independent Nursing Function", "Delegated Task", "Medical Order"], ans: 1 },
+    { id: 14, q: "Mitigasi utama jika nama di ijazah dan paspor berbeda saat pengajuan PSV adalah melampirkan:", options: ["Surat Keterangan Beda Nama resmi", "Tipe-x pada paspor", "Ijazah palsu baru", "Surat nikah"], ans: 0 },
+    { id: 15, q: "Gaji bersih yang diterima perawat di rekening bank setelah semua potongan resmi disebut:", options: ["Gross Salary", "Net Take-Home Pay", "Basic Tax", "Severance Pay"], ans: 1 },
+    { id: 16, q: "Klausul denda resign yang bernilai tetap $12.000 selama 3 tahun tanpa penyusutan pro-rata adalah:", options: ["Fair Clause", "Predatory Clawback Clause", "Bonus Incentive", "Standard Repayment"], ans: 1 },
+    { id: 17, q: "Berdasarkan undang-undang kerja di Arab Saudi (Sistem Kafala baru), penahanan paspor oleh HRD adalah:", options: ["Tindakan sah", "Tindakan ilegal & indikator Forced Labour", "Syarat pendaftaran akun bank", "Kebijakan wajib"], ans: 1 },
+    { id: 18, q: "Berapa hari Curtailment Period yang diberikan Home Office UK bagi perawat yang terkena PHK untuk cari CoS baru?", options: ["14 Hari", "30 Hari", "60 Hari", "90 Hari"], ans: 2 },
+    { id: 19, q: "Pemotongan gaji tanpa persetujuan tertulis pekerja atau tanpa dasar hukum resmi dikategorikan:", options: ["Lawful Deduction", "Unlawful Wage Deduction", "Tax Incentive", "Pension Savings"], ans: 1 },
+    { id: 20, q: "Skala gaji terstandar Registered Nurse di NHS Inggris secara umum dimulai pada jenjang:", options: ["Band 2", "Band 3", "Band 5", "Band 8"], ans: 2 },
+    { id: 21, q: "Penahanan paspor, pembatasan ruang gerak, dan penagihan utang fiktif merupakan indikator utama:", options: ["Perekrutan etis", "Tindak Pidana Perdagangan Orang (TPPO) / Forced Labour", "Promosi jabatan", "Jaminan keselamatan"], ans: 1 },
+    { id: 22, q: "Jalur resmi internal di RS untuk melaporkan insiden keselamatan pasien tanpa takut di-PHK adalah:", options: ["Sosial media", "Freedom to Speak Up Guardian / Whistleblowing Channel", "Forum umum", "Blog pribadi"], ans: 1 },
+    { id: 23, q: "Tindakan pencegahan keamanan digital sebelum berangkat kerja ke luar negeri meliputi:", options: ["Menghapus cloud storage", "Unggah salinan dokumen ke cloud & registrasi Lapor Diri Kemlu", "Beri password ke agen", "Matikan ponsel"], ans: 1 },
+    { id: 24, q: "Dokumen perjalanan darurat yang diterbitkan KBRI jika paspor perawat ditahan/hilang adalah:", options: ["Visa Transit", "Surat Perjalanan Laksana Paspor (SPLP)", "KTP Sementara", "Kartu Garansi"], ans: 1 },
+    { id: 25, q: "Prinsip pemberian asuhan keperawatan yang bebas dari bias implisit dan diskriminasi budaya adalah:", options: ["Cultural Safety", "Clinical Audit", "Isolation Policy", "Assimilation"], ans: 0 },
+    { id: 26, q: "Prinsip Employer-Pays dalam WHO Code menetapkan bahwa seluruh biaya visa dan tiket ditanggung oleh:", options: ["Perawat sendiri", "Pemberi kerja (Employer)", "Pemerintah asal", "Agensi lokal"], ans: 1 },
+    { id: 27, q: "Program Triple Win merupakan kerjasama penempatan tenaga perawat antara Indonesia dan:", options: ["Jepang", "Jerman", "Inggris", "Saudi Arabia"], ans: 1 },
+    { id: 28, q: "Skema penempatan G2G di Indonesia secara teknis dikelola oleh lembaga pemerintah:", options: ["Kemendikbud", "BP2MI", "Kemenkeu", "Kemenhub"], ans: 1 },
+    { id: 29, q: "Lembaga verifikasi kredensial DataFlow umumnya digunakan untuk proses lisensi di kawasan:", options: ["Timur Tengah (GCC)", "Amerika Serikat", "Eropa Barat", "Australia"], ans: 0 },
+    { id: 30, q: "Verifikasi dokumen oleh CGFNS merupakan persyaratan utama untuk bekerja di negara:", options: ["Arab Saudi", "Amerika Serikat & Kanada", "Jepang", "Jerman"], ans: 1 },
+    { id: 31, q: "Berdasarkan standar konversi jam, 2 SKS Praktik Klinik setara dengan berapa Clock Hours?", options: ["51 Jam", "102 Jam", "153 Jam", "204 Jam"], ans: 1 },
+    { id: 32, q: "Sertifikasi ujian Prometric SCFHS wajib dimiliki perawat yang akan bekerja di negara:", options: ["Kuwait", "Arab Saudi", "UEA", "Qatar"], ans: 1 },
+    { id: 33, q: "Ujian OSCE pada NMC UK Test of Competence menilai keterampilan perawat melalui:", options: ["Ujian Pilihan Ganda Komputer", "Simulasi Praktik Klinis Langsung di Stasiun", "Wawancara Telepon", "Penulisan Esai"], ans: 1 },
+    { id: 34, q: "Tindakan pemberian obat injeksi atas resep dokter tergolong sebagai fungsi keperawatan:", options: ["Independent", "Collaborative / Dependent", "Illegal", "Unregulated"], ans: 1 },
+    { id: 35, q: "Format komunikasi SBAR paling tepat digunakan saat:", options: ["Serah terima (handover) & pelaporan kondisi kritis pasien", "Menagih gaji", "Wawancara kerja", "Mengisi absensi"], ans: 0 },
+    { id: 36, q: "Dalam SBAR, bagian 'Background' mencakup informasi tentang:", options: ["Masalah utama saat ini", "Riwayat medis relevan & latar belakang kondisi pasien", "Hasil analisis subjektif", "Rencana tindakan lanjutan"], ans: 1 },
+    { id: 37, q: "Dalam SBAR, bagian 'Assessment' berisi tentang:", options: ["Identitas perawat", "Hasil pengkajian & analisis kondisi klinis saat ini", "Usulan resep obat", "Riwayat keluarga"], ans: 1 },
+    { id: 38, q: "Elemen malpraktik 'Duty of Care' membuktikan bahwa:", options: ["Perawat memiliki kewajiban hukum untuk merawat pasien tersebut", "Terjadi pelanggaran aturan", "Pasien mengalami kerugian uang", "Dokter bersalah"], ans: 0 },
+    { id: 39, q: "Elemen malpraktik 'Damages' membuktikan bahwa:", options: ["Terjadi cedera fisik, finansial, atau emosional yang nyata pada pasien", "Perawat tidak ramah", "Biaya obat mahal", "Pasien pindah RS"], ans: 0 },
+    { id: 40, q: "Gaji sebelum dipotong pajak dan iuran wajib lainnya disebut:", options: ["Net Salary", "Gross Salary", "Take-Home Pay", "Allowance"], ans: 1 },
+    { id: 41, q: "Portal Qiwa di Arab Saudi berfungsi untuk memfasilitasi:", options: ["Pendaftaran haji", "Layanan ketenagakerjaan & Transfer Sponsorship mandiri", "Pembayaran pajak", "Pemesanan tiket"], ans: 1 },
+    { id: 42, q: "EU Working Time Directive menetapkan batas maksimal jam kerja mingguan sebesar:", options: ["35 Jam", "40 Jam", "48 Jam", "60 Jam"], ans: 2 },
+    { id: 43, q: "Pasangan pemegang Dependent Visa berhak bekerja secara sah dengan adanya dokumen:", options: ["Spousal Work Permit", "Tourist Visa", "Business Pass", "Exit Visa"], ans: 0 },
+    { id: 44, q: "Nomor Hotline Pengaduan BP2MI yang dapat dihubungi 24 jam adalah:", options: ["110", "119", "137", "150"], ans: 2 },
+    { id: 45, q: "Alamat situs resmi Lapor Diri WNI Kemlu adalah:", options: ["peduliwni.kemlu.go.id", "bp2mi.go.id", "satusehat.kemkes.go.id", "imigrasi.go.id"], ans: 0 },
+    { id: 46, q: "Ancaman pemutusan visa jika menolak tindakan yang membahayakan pasien tergolong bentuk:", options: ["Intimidasi & Eksploitasi Ketenagakerjaan", "Prosedur standar RS", "Pelatihan disiplin", "Konseling kerja"], ans: 0 },
+    { id: 47, q: "Perlindungan Whistleblower menjamin pelapor dari tindakan:", options: ["Retaliation (pemecatan/balasan sepihak)", "Kenaikan gaji", "Mutasi promosi", "Pemberian bonus"], ans: 0 },
+    { id: 48, q: "Serikat pekerja keperawatan utama di UK adalah:", options: ["RCN (Royal College of Nursing)", "ANA", "PPNI", "PMA"], ans: 0 },
+    { id: 49, q: "Denda ganti rugi pelatihan (clawback) yang sah wajib disusun berdasarkan skema:", options: ["Pro-rata (menyusut seiring waktu masa kerja)", "Flat/kaku", "Bunga berbunga", "Pembayaran tunai cepat"], ans: 0 },
+    { id: 50, q: "Manfaat utama memahami modul Global Mobility & Legal Compliance adalah:", options: ["Memahami hak hukum, mencegah eksploitasi, & menjamin keselamatan pasien global", "Bebas ujian lisensi", "Mendapat paspor diplomatik", "Bebas pajak permanen"], ans: 0 }
+];
+
+let currentUser = { id: "", name: "" };
+let preTestScore = 0;
+let postTestScore = 0;
+let preTestAnswers = [];
+let postTestAnswers = [];
+
+// RENDER SOAL KE FORM
+function renderQuestions(questions, formId, prefix) {
+    const form = document.getElementById(formId);
+    form.innerHTML = "";
+    questions.forEach((item, index) => {
+        const qDiv = document.createElement("div");
+        qDiv.className = "question-item";
         
-        <!-- Header Studio -->
-        <div class="bg-slate-850 p-6 border-b border-slate-800 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="p-3 bg-indigo-600/20 text-indigo-400 rounded-xl border border-indigo-500/30">
-                    <i class="fa-solid fa-file-powerpoint text-2xl"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold text-white tracking-wide">DocToPPT Studio Pro</h1>
-                    <p class="text-xs text-slate-400">Full Suite PPTX & PPT 2003 Engine + Live Presenter View</p>
-                </div>
-            </div>
-            <span class="text-xs font-semibold px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-full">
-                v3.5 Geometric Edition
-            </span>
-        </div>
-
-        <!-- Form Konfigurasi Utama -->
-        <div class="p-6 md:p-8 space-y-6">
-            
-            <!-- Upload Area -->
-            <div>
-                <label class="block text-sm font-medium text-slate-300 mb-2">Unggah Dokumen Sumber (.txt, .docx, .pdf)</label>
-                <div class="relative border-2 border-dashed border-slate-700 hover:border-indigo-500 rounded-xl p-6 text-center transition cursor-pointer bg-slate-900/50 hover:bg-slate-850 group" id="dropZone">
-                    <input type="file" id="fileInput" accept=".txt,.docx,.pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-500 group-hover:text-indigo-400 mb-2 transition"></i>
-                    <p class="text-sm font-medium text-slate-300" id="fileNameDisplay">Klik atau seret file dokumen ke sini</p>
-                    <p class="text-xs text-slate-500 mt-1">Mendukung format TXT, Word (.docx), dan PDF</p>
-                </div>
-            </div>
-
-            <!-- Panel Pengaturan Target Slide & Template -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-900/80 p-4 rounded-xl border border-slate-800">
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-2">Target Jumlah Slide</label>
-                    <select id="slideCountSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        <option value="auto">Otomatis (Struktur Asli)</option>
-                        <option value="10">Padatkan ke 10 Slide</option>
-                        <option value="20">Padatkan ke 20 Slide</option>
-                        <option value="30">Padatkan ke 30 Slide</option>
-                        <option value="40">Padatkan ke 40 Slide</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-2">Template Desain</label>
-                    <select id="themeSelect" onchange="toggleCustomColorControls()" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        <option value="NAVY_EXECUTIVE">Corporate Navy</option>
-                        <option value="HEALTHCARE_PRO">Medical Emerald</option>
-                        <option value="SLATE_MINIMAL">Slate Minimalist</option>
-                        <option value="LUXURY_GOLD">Onyx Gold Executive</option>
-                        <option value="MIDNIGHT_CYBER">Tech Cyber Dark</option>
-                        <option value="CREATIVE_WARM">Nordic Warm Stone</option>
-                        <option value="CUSTOM">Custom Color Scheme</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-2">Format Output</label>
-                    <select id="formatSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        <option value="pptx">PowerPoint Modern (.pptx)</option>
-                        <option value="ppt2003">PowerPoint 97-2003 (.ppt)</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Opsi Kustomisasi Background Style & Color Picker -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-900/40 p-4 rounded-xl border border-slate-800">
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-2">Gaya Latar Geometric</label>
-                    <select id="bgPatternSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        <option value="none">Flat Solid Color</option>
-                        <option value="dots">Geometric Dots Grid</option>
-                        <option value="lines">Diagonal Stripe Lines</option>
-                        <option value="mesh">Modern Mesh Gradient</option>
-                        <option value="hexagons">Hexagon Hive Pattern</option>
-                    </select>
-                </div>
-
-                <div id="customBgColorWrapper" class="hidden">
-                    <label class="block text-xs font-medium text-slate-300 mb-2">Warna Background (Custom)</label>
-                    <div class="flex items-center gap-2">
-                        <input type="color" id="customBgPicker" value="#0F172A" class="h-9 w-12 bg-transparent cursor-pointer rounded">
-                        <span class="text-xs text-slate-400">Pilih Warna Utama</span>
-                    </div>
-                </div>
-
-                <div id="customAccentColorWrapper" class="hidden">
-                    <label class="block text-xs font-medium text-slate-300 mb-2">Warna Aksentuasi (Custom)</label>
-                    <div class="flex items-center gap-2">
-                        <input type="color" id="customAccentPicker" value="#0284C7" class="h-9 w-12 bg-transparent cursor-pointer rounded">
-                        <span class="text-xs text-slate-400">Pilih Warna Accent</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Panel Pengaturan Font, Ukuran & Bullet Style -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-2">Jenis Font Popular PPT</label>
-                    <select id="fontSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        <option value="Calibri">Calibri (Standard Modern)</option>
-                        <option value="Aptos">Aptos (New Office Standard)</option>
-                        <option value="Segoe UI">Segoe UI (Clean Tech)</option>
-                        <option value="Arial">Arial (Universal)</option>
-                        <option value="Georgia">Georgia (Serif Formal)</option>
-                        <option value="Trebuchet MS">Trebuchet MS (Dynamic)</option>
-                        <option value="Helvetica">Helvetica (Classic Clean)</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-2">Ukuran Font Judul</label>
-                    <select id="titleSizeSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        <option value="20">20 pt (Ringkas)</option>
-                        <option value="24" selected>24 pt (Standar)</option>
-                        <option value="28">28 pt (Besar)</option>
-                        <option value="32">32 pt (Ekstra Besar)</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-2">Ukuran Font Isi / Body</label>
-                    <select id="bodySizeSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        <option value="12">12 pt (Kecil/Padat)</option>
-                        <option value="14" selected>14 pt (Standar)</option>
-                        <option value="16">16 pt (Sedang)</option>
-                        <option value="18">18 pt (Besar)</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-2">Gaya Bullet Points</label>
-                    <select id="bulletSelect" class="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        <option value="•">● Circle (Standar)</option>
-                        <option value="➢">➢ Arrow Pointer</option>
-                        <option value="■">■ Square Box</option>
-                        <option value="✓">✓ Checkmark</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Panel Tombol Aksi -->
-            <div class="flex flex-col sm:flex-row gap-3">
-                <button onclick="processAndPreview()" id="btnPreview" class="flex-1 bg-slate-800 hover:bg-slate-750 border border-slate-700 text-slate-200 font-semibold py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-eye text-indigo-400"></i>
-                    <span>Generate & Live Preview</span>
-                </button>
-                <button onclick="generatePresentation()" id="btnGenerate" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-4 rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-download"></i>
-                    <span>Download File Presentation</span>
-                </button>
-            </div>
-
-            <!-- Status Indicator -->
-            <div id="status" class="hidden p-4 rounded-xl border text-sm font-medium text-center"></div>
-        </div>
-    </div>
-
-    <!-- Live Slide Thumbnails Panel -->
-    <div id="previewContainer" class="max-w-5xl w-full hidden space-y-4">
-        <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                <i class="fa-solid fa-border-all text-indigo-400"></i>
-                Slide Thumbnails Preview
-            </h2>
-            <button onclick="startFullscreenPresentation()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center gap-2 transition">
-                <i class="fa-solid fa-play"></i>
-                <span>Start Presentation Mode</span>
-            </button>
-        </div>
-        
-        <div id="thumbnailGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <!-- Thumbnail cards injected here -->
-        </div>
-    </div>
-
-    <!-- Presentation Fullscreen Modal View -->
-    <div id="presentationModal" class="fixed inset-0 bg-black z-50 hidden flex flex-col justify-between p-6">
-        <div class="flex justify-between items-center text-slate-400 text-xs">
-            <span id="modalSlideCounter">Slide 1 of 10</span>
-            <span class="text-slate-500">Gunakan Navigasi [Arah Kiri / Kanan] | [Esc] Keluar</span>
-            <button onclick="closeFullscreenPresentation()" class="text-slate-400 hover:text-white text-lg p-1">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <div id="modalSlideCanvas" class="flex-1 my-4 flex items-center justify-center">
-            <!-- Active slide full preview -->
-        </div>
-
-        <div class="flex justify-center items-center gap-4">
-            <button onclick="prevSlide()" class="p-3 bg-slate-800 hover:bg-slate-700 text-white rounded-full">
-                <i class="fa-solid fa-chevron-left"></i>
-            </button>
-            <button onclick="nextSlide()" class="p-3 bg-slate-800 hover:bg-slate-700 text-white rounded-full">
-                <i class="fa-solid fa-chevron-right"></i>
-            </button>
-        </div>
-    </div>
-
-    <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-        const TEMPLATES = {
-            NAVY_EXECUTIVE: { bg: "0F172A", cardBg: "1E293B", accent: "0284C7", title: "38BDF8", text: "F8FAFC" },
-            HEALTHCARE_PRO: { bg: "F0FDF4", cardBg: "FFFFFF", accent: "059669", title: "065F46", text: "1F2937" },
-            SLATE_MINIMAL: { bg: "F8FAFC", cardBg: "FFFFFF", accent: "3B82F6", title: "0F172A", text: "334155" },
-            LUXURY_GOLD: { bg: "121212", cardBg: "1E1E1E", accent: "D97706", title: "FBBF24", text: "E5E7EB" },
-            MIDNIGHT_CYBER: { bg: "050B14", cardBg: "0A192F", accent: "6366F1", title: "818CF8", text: "E2E8F0" },
-            CREATIVE_WARM: { bg: "FAFAF9", cardBg: "F5F5F4", accent: "EA580C", title: "7C2D12", text: "292524" }
-        };
-
-        let generatedBlocks = [];
-        let currentSlideIndex = 0;
-
-        document.getElementById('fileInput').addEventListener('change', (e) => {
-            const fileName = e.target.files[0]?.name || 'Klik atau seret file dokumen ke sini';
-            document.getElementById('fileNameDisplay').innerText = fileName;
-        });
-
-        function toggleCustomColorControls() {
-            const isCustom = document.getElementById('themeSelect').value === 'CUSTOM';
-            document.getElementById('customBgColorWrapper').classList.toggle('hidden', !isCustom);
-            document.getElementById('customAccentColorWrapper').classList.toggle('hidden', !isCustom);
-        }
-
-        function getActiveTheme() {
-            const themeKey = document.getElementById('themeSelect').value;
-            if (themeKey === 'CUSTOM') {
-                const bgHex = document.getElementById('customBgPicker').value.replace('#', '');
-                const accentHex = document.getElementById('customAccentPicker').value.replace('#', '');
-                return {
-                    bg: bgHex,
-                    cardBg: "1E293B",
-                    accent: accentHex,
-                    title: "F8FAFC",
-                    text: "E2E8F0"
-                };
-            }
-            return TEMPLATES[themeKey];
-        }
-
-        function getGeometricStyle(patternKey, accentHex) {
-            switch(patternKey) {
-                case 'dots':
-                    return `background-image: radial-gradient(#${accentHex}40 1px, transparent 1px); background-size: 12px 12px;`;
-                case 'lines':
-                    return `background-image: repeating-linear-gradient(45deg, #${accentHex}15, #${accentHex}15 10px, transparent 10px, transparent 20px);`;
-                case 'mesh':
-                    return `background-image: radial-gradient(at 0% 0%, #${accentHex}33 0px, transparent 50%), radial-gradient(at 100% 100%, #${accentHex}22 0px, transparent 50%);`;
-                case 'hexagons':
-                    return `background-image: radial-gradient(#${accentHex}30 2px, transparent 2px), radial-gradient(#${accentHex}30 2px, transparent 2px); background-size: 20px 20px; background-position: 0 0, 10px 10px;`;
-                default:
-                    return '';
-            }
-        }
-
-        function compactBlocks(blocks, targetCount) {
-            if (targetCount === 'auto' || blocks.length === 0) return blocks;
-            const target = parseInt(targetCount, 10);
-            if (blocks.length <= target) return blocks;
-
-            const chunkSize = Math.ceil(blocks.length / target);
-            let compacted = [];
-
-            for (let i = 0; i < blocks.length; i += chunkSize) {
-                const group = blocks.slice(i, i + chunkSize);
-                let titleLine = group[0].trim().split('\n')[0].replace(/^[#*-\s]+/, '');
-                
-                let combinedItems = [];
-                group.forEach((block, idx) => {
-                    const lines = block.trim().split('\n');
-                    lines.forEach((line, lIdx) => {
-                        if (idx === 0 && lIdx === 0) return;
-                        const cleaned = line.replace(/^[#*-\s]+/, '').trim();
-                        if (cleaned.length > 0) combinedItems.push(cleaned);
-                    });
-                });
-
-                let compactedBlock = titleLine;
-                if (combinedItems.length > 0) compactedBlock += '\n' + combinedItems.join('\n');
-                compacted.push(compactedBlock);
-            }
-            return compacted;
-        }
-
-        async function extractTextFromFile(file) {
-            let textContent = '';
-            if (file.name.endsWith('.txt')) {
-                textContent = await file.text();
-            } else if (file.name.endsWith('.docx')) {
-                const arrayBuffer = await file.arrayBuffer();
-                const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
-                textContent = result.value;
-            } else if (file.name.endsWith('.pdf')) {
-                const arrayBuffer = await file.arrayBuffer();
-                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const text = await page.getTextContent();
-                    textContent += text.items.map(item => item.str).join(' ') + '\n\n';
-                }
-            }
-            return textContent;
-        }
-
-        async function processAndPreview() {
-            const fileInput = document.getElementById('fileInput');
-            if (!fileInput.files[0]) {
-                showStatus('Pilih file dokumen terlebih dahulu!', 'error');
-                return;
-            }
-
-            showStatus('Menganalisis dokumen dan membuat pratinjau...', 'info');
-
-            try {
-                const textContent = await extractTextFromFile(fileInput.files[0]);
-                let rawBlocks = textContent.split(/\n\s*\n/).filter(b => b.trim().length > 0);
-                const targetSlideCount = document.getElementById('slideCountSelect').value;
-                generatedBlocks = compactBlocks(rawBlocks, targetSlideCount);
-
-                renderThumbnails();
-                showStatus(`Berhasil memuat ${generatedBlocks.length} slide thumbnail preview!`, 'success');
-            } catch (err) {
-                showStatus('Gagal memproses file: ' + err.message, 'error');
-            }
-        }
-
-        function renderThumbnails() {
-            const grid = document.getElementById('thumbnailGrid');
-            const t = getActiveTheme();
-            const patternKey = document.getElementById('bgPatternSelect').value;
-            const geoCss = getGeometricStyle(patternKey, t.accent);
-            const bulletStyle = document.getElementById('bulletSelect').value;
-            const fontStyle = document.getElementById('fontSelect').value;
-
-            grid.innerHTML = '';
-
-            generatedBlocks.forEach((block, idx) => {
-                const lines = block.trim().split('\n').filter(l => l.trim().length > 0);
-                const title = lines[0].replace(/^[#*-\s]+/, '').substring(0, 50);
-                const items = lines.slice(1, 4);
-
-                let cardHtml = `
-                    <div onclick="openFullscreenAt(${idx})" class="aspect-video p-3 rounded-lg border cursor-pointer hover:border-indigo-500 transition relative flex flex-col justify-between overflow-hidden shadow" 
-                         style="background-color: #${t.bg}; ${geoCss} font-family: '${fontStyle}', sans-serif;">
-                        <div class="rounded p-2 h-full flex flex-col justify-between" style="background-color: #${t.cardBg}; border-left: 3px solid #${t.accent};">
-                            <div>
-                                <h3 class="font-bold text-xs line-clamp-1 mb-1" style="color: #${t.title};">${title}</h3>
-                                <ul class="text-[9px] space-y-0.5" style="color: #${t.text};">
-                                    ${items.map(i => `<li class="line-clamp-1">${bulletStyle} ${i.replace(/^[#*-\s]+/, '')}</li>`).join('')}
-                                </ul>
-                            </div>
-                            <span class="text-[8px] text-right font-medium" style="color: #${t.text};">Slide ${idx + 1}</span>
-                        </div>
-                    </div>
-                `;
-                grid.innerHTML += cardHtml;
-            });
-
-            document.getElementById('previewContainer').classList.remove('hidden');
-        }
-
-        function startFullscreenPresentation() {
-            if (generatedBlocks.length === 0) return;
-            currentSlideIndex = 0;
-            updatePresentationModal();
-            document.getElementById('presentationModal').classList.remove('hidden');
-        }
-
-        function openFullscreenAt(index) {
-            currentSlideIndex = index;
-            updatePresentationModal();
-            document.getElementById('presentationModal').classList.remove('hidden');
-        }
-
-        function closeFullscreenPresentation() {
-            document.getElementById('presentationModal').classList.add('hidden');
-        }
-
-        function updatePresentationModal() {
-            const canvas = document.getElementById('modalSlideCanvas');
-            const counter = document.getElementById('modalSlideCounter');
-            const t = getActiveTheme();
-            const patternKey = document.getElementById('bgPatternSelect').value;
-            const geoCss = getGeometricStyle(patternKey, t.accent);
-            const bulletStyle = document.getElementById('bulletSelect').value;
-            const fontStyle = document.getElementById('fontSelect').value;
-            const titleSize = document.getElementById('titleSizeSelect').value;
-            const bodySize = document.getElementById('bodySizeSelect').value;
-
-            const block = generatedBlocks[currentSlideIndex];
-            const lines = block.trim().split('\n').filter(l => l.trim().length > 0);
-            const title = lines[0].replace(/^[#*-\s]+/, '');
-            const items = lines.slice(1);
-
-            counter.innerText = `Slide ${currentSlideIndex + 1} of ${generatedBlocks.length}`;
-
-            canvas.innerHTML = `
-                <div class="w-full max-w-4xl aspect-video rounded-xl p-8 flex flex-col justify-between shadow-2xl transition"
-                     style="background-color: #${t.bg}; ${geoCss} font-family: '${fontStyle}', sans-serif;">
-                    <div class="h-full rounded-lg p-6 flex flex-col justify-start" style="background-color: #${t.cardBg}; border-left: 6px solid #${t.accent};">
-                        <h1 class="font-bold mb-4" style="color: #${t.title}; font-size: ${titleSize}px;">${title}</h1>
-                        <ul class="space-y-2 overflow-y-auto" style="color: #${t.text}; font-size: ${bodySize}px;">
-                            ${items.map(i => `<li>${bulletStyle} ${i.replace(/^[#*-\s]+/, '')}</li>`).join('')}
-                        </ul>
-                    </div>
-                </div>
+        let optionsHtml = "";
+        item.options.forEach((opt, optIndex) => {
+            optionsHtml += `
+                <li>
+                    <label style="font-weight: normal;">
+                        <input type="radio" name="${prefix}_q${index}" value="${optIndex}" required>
+                        ${String.fromCharCode(65 + optIndex)}.${opt}
+                    </label>
+                </li>
             `;
-        }
-
-        function prevSlide() {
-            if (currentSlideIndex > 0) {
-                currentSlideIndex--;
-                updatePresentationModal();
-            }
-        }
-
-        function nextSlide() {
-            if (currentSlideIndex < generatedBlocks.length - 1) {
-                currentSlideIndex++;
-                updatePresentationModal();
-            }
-        }
-
-        window.addEventListener('keydown', (e) => {
-            const modal = document.getElementById('presentationModal');
-            if (!modal.classList.contains('hidden')) {
-                if (e.key === 'ArrowRight') nextSlide();
-                if (e.key === 'ArrowLeft') prevSlide();
-                if (e.key === 'Escape') closeFullscreenPresentation();
-            }
         });
 
-        async function generatePresentation() {
-            const fileInput = document.getElementById('fileInput');
-            if (!fileInput.files[0]) {
-                showStatus('Pilih file dokumen terlebih dahulu!', 'error');
-                return;
-            }
+        qDiv.innerHTML = `
+            <div class="question-text">${index + 1}.${item.q}</div>
+            <ul class="options-list">${optionsHtml}</ul>
+        `;
+        form.appendChild(qDiv);
+    });
+}
 
-            const fontStyle = document.getElementById('fontSelect').value;
-            const exportFormat = document.getElementById('formatSelect').value;
-            const targetSlideCount = document.getElementById('slideCountSelect').value;
-            const titleSize = parseInt(document.getElementById('titleSizeSelect').value, 10);
-            const bodySize = parseInt(document.getElementById('bodySizeSelect').value, 10);
-            const t = getActiveTheme();
+// REGISTRASI USER
+function registerUser() {
+    const idInput = document.getElementById("testTakerID").value.trim();
+    const nameInput = document.getElementById("fullName").value.trim();
 
-            showStatus('Mengunduh dan mengekspor presentasi...', 'info');
+    if (!idInput || !nameInput) {
+        alert("Mohon isi Test Taker ID dan Nama Lengkap Anda terlebih dahulu!");
+        return;
+    }
 
-            try {
-                if (generatedBlocks.length === 0) {
-                    const textContent = await extractTextFromFile(fileInput.files[0]);
-                    let rawBlocks = textContent.split(/\n\s*\n/).filter(b => b.trim().length > 0);
-                    generatedBlocks = compactBlocks(rawBlocks, targetSlideCount);
-                }
+    currentUser.id = idInput;
+    currentUser.name = nameInput;
 
-                if (exportFormat === 'ppt2003') {
-                    generatePPT2003File(generatedBlocks, fontStyle, t.title, t.text, t.bg, t.cardBg, t.accent);
-                } else {
-                    let pptx = new PptxGenJS();
-                    pptx.layout = 'LAYOUT_16x9';
+    document.getElementById("userFormSection").classList.add("hidden");
+    document.getElementById("examContainer").classList.remove("hidden");
 
-                    generatedBlocks.forEach((block, index) => {
-                        const lines = block.trim().split('\n').filter(l => l.trim().length > 0);
-                        if (lines.length === 0) return;
+    // Render soal
+    renderQuestions(preTestQuestions, "preTestForm", "pre");
+    renderQuestions(postTestQuestions, "postTestForm", "post");
+}
 
-                        let slide = pptx.addSlide();
-                        slide.background = { color: t.bg };
+// SUBMIT PRE-TEST
+function submitPreTest() {
+    const form = document.getElementById("preTestForm");
+    let correctCount = 0;
+    preTestAnswers = [];
 
-                        slide.addShape(pptx.shapes.RECTANGLE, {
-                            x: 0, y: 0, w: '100%', h: 0.15,
-                            fill: { color: t.accent }
-                        });
-
-                        slide.addShape(pptx.shapes.ROUNDED_RECTANGLE, {
-                            x: 0.8, y: 0.8, w: 11.7, h: 5.9,
-                            fill: { color: t.cardBg },
-                            line: { color: t.accent, width: 1 },
-                            rectRadius: 0.08
-                        });
-
-                        const title = lines[0].replace(/^[#*-\s]+/, '').substring(0, 90);
-                        let bodyItems = lines.slice(1);
-
-                        slide.addText(title, {
-                            x: 1.2, y: 1.1, w: 10.9, h: 0.8,
-                            fontSize: titleSize, bold: true,
-                            color: t.title, fontFace: fontStyle
-                        });
-
-                        if (bodyItems.length > 0) {
-                            const formattedText = bodyItems.slice(0, 8).map(item => ({
-                                text: item.replace(/^[*-\s]+/, '').trim(),
-                                options: { bullet: true, inset: 0.2 }
-                            }));
-
-                            slide.addText(formattedText, {
-                                x: 1.2, y: 2.0, w: 10.9, h: 4.2,
-                                fontSize: bodySize, color: t.text,
-                                fontFace: fontStyle, lineSpacing: 20
-                            });
-                        }
-
-                        slide.addText(`Slide ${index + 1} of ${generatedBlocks.length}`, {
-                            x: 10.0, y: 6.2, w: 2.2, h: 0.3,
-                            fontSize: 10, color: t.text, fontFace: fontStyle, align: 'right'
-                        });
-                    });
-
-                    await pptx.writeFile({ fileName: `Presentation_${generatedBlocks.length}_Slides.pptx` });
-                }
-
-                showStatus(`Selesai! File berhasil diunduh.`, 'success');
-            } catch (err) {
-                showStatus('Gagal memproses file: ' + err.message, 'error');
-            }
+    for (let i = 0; i < preTestQuestions.length; i++) {
+        const selected = form.querySelector(`input[name="pre_q${i}"]:checked`);
+        if (!selected) {
+            alert(`Mohon jawab semua soal Pre-Test! Soal nomor ${i + 1} belum dijawab.`);
+            return;
         }
-
-        function generatePPT2003File(blocks, fontStyle, titleHex, bodyHex, bgHex, cardHex, accentHex) {
-            let slideHtmlContent = `
-            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:p="urn:schemas-microsoft-com:office:powerpoint" xmlns="http://www.w3.org/TR/REC-html40">
-            <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="ProgId" content="PowerPoint.Slide">
-            <style>
-                body { font-family: '${fontStyle}', sans-serif; background-color: #${bgHex}; margin:0; padding:0; }
-                .slide { page-break-after: always; width: 1000px; height: 562px; padding: 40px; box-sizing: border-box; background-color: #${bgHex}; position: relative; }
-                .card { background-color: #${cardHex}; border-left: 6px solid #${accentHex}; border-radius: 8px; padding: 30px; height: 100%; box-sizing: border-box; }
-                h1 { color: #${titleHex}; font-size: 26px; margin-top: 0; }
-                ul { color: #${bodyHex}; font-size: 16px; line-height: 1.6; }
-                li { margin-bottom: 8px; }
-            </style></head><body>`;
-
-            blocks.forEach((block, index) => {
-                const lines = block.trim().split('\n').filter(l => l.trim().length > 0);
-                if (lines.length === 0) return;
-                const title = lines[0].replace(/^[#*-\s]+/, '');
-                const items = lines.slice(1);
-
-                slideHtmlContent += `<div class="slide"><div class="card"><h1>${title}</h1>`;
-                if (items.length > 0) {
-                    slideHtmlContent += `<ul>`;
-                    items.forEach(item => { slideHtmlContent += `<li>${item.replace(/^[#*-\s]+/, '').trim()}</li>`; });
-                    slideHtmlContent += `</ul>`;
-                }
-                slideHtmlContent += `</div></div>`;
-            });
-
-            slideHtmlContent += `</body></html>`;
-            const blob = new Blob([slideHtmlContent], { type: 'application/vnd.ms-powerpoint' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `Presentation_Legacy_2003.ppt`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+        const ansValue = parseInt(selected.value);
+        preTestAnswers.push(ansValue);
+        if (ansValue === preTestQuestions[i].ans) {
+            correctCount++;
         }
+    }
 
-        function showStatus(message, type) {
-            const status = document.getElementById('status');
-            status.classList.remove('hidden', 'bg-indigo-500/10', 'text-indigo-400', 'border-indigo-500/20', 'bg-red-500/10', 'text-red-400', 'border-red-500/20', 'bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/20');
-            if (type === 'error') status.classList.add('bg-red-500/10', 'text-red-400', 'border-red-500/20');
-            else if (type === 'success') status.classList.add('bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/20');
-            else status.classList.add('bg-indigo-500/10', 'text-indigo-400', 'border-indigo-500/20');
-            status.innerText = message;
+    preTestScore = (correctCount / preTestQuestions.length) * 100;
+
+    // UPDATE UI PRE-TEST (DISABLED) & AKTIFKAN POST-TEST
+    document.getElementById("preTestCard").classList.add("disabled");
+    document.getElementById("btnSubmitPreTest").disabled = true;
+    document.getElementById("preTestBadge").className = "badge badge-done";
+    document.getElementById("preTestBadge").innerText = "Selesai";
+
+    // AKTIFKAN POST-TEST AUTOMATICALLY
+    const postCard = document.getElementById("postTestCard");
+    postCard.classList.remove("disabled");
+    document.getElementById("btnSubmitPostTest").disabled = false;
+    document.getElementById("postTestBadge").className = "badge badge-active";
+    document.getElementById("postTestBadge").innerText = "Aktif";
+
+    alert("Pre-Test berhasil dikirim! Post-Test sekarang sudah AKTIF dan dapat Anda kerjakan.");
+    postCard.scrollIntoView({ behavior: 'smooth' });
+}
+
+// SUBMIT POST-TEST
+function submitPostTest() {
+    const form = document.getElementById("postTestForm");
+    let correctCount = 0;
+    postTestAnswers = [];
+
+    for (let i = 0; i < postTestQuestions.length; i++) {
+        const selected = form.querySelector(`input[name="post_q${i}"]:checked`);
+        if (!selected) {
+            alert(`Mohon jawab semua soal Post-Test! Soal nomor ${i + 1} belum dijawab.`);
+            return;
         }
-    </script>
+        const ansValue = parseInt(selected.value);
+        postTestAnswers.push(ansValue);
+        if (ansValue === postTestQuestions[i].ans) {
+            correctCount++;
+        }
+    }
+
+    postTestScore = (correctCount / postTestQuestions.length) * 100;
+
+    // UPDATE UI POST-TEST (DISABLED)
+    document.getElementById("postTestCard").classList.add("disabled");
+    document.getElementById("btnSubmitPostTest").disabled = true;
+    document.getElementById("postTestBadge").className = "badge badge-done";
+    document.getElementById("postTestBadge").innerText = "Selesai";
+
+    // DISPLAY DASHBOARD RESULT
+    displayResults();
+}
+
+// TAMPILKAN HASIL DAHBOARD
+function displayResults() {
+    document.getElementById("resID").innerText = currentUser.id;
+    document.getElementById("resName").innerText = currentUser.name;
+    document.getElementById("resTime").innerText = new Date().toLocaleString("id-ID");
+
+    const preCorrect = (preTestScore / 100) * preTestQuestions.length;
+    const postCorrect = (postTestScore / 100) * postTestQuestions.length;
+
+    document.getElementById("resPreScore").innerText = `${preTestScore.toFixed(0)} / 100`;
+    document.getElementById("resPreCorrect").innerText = `${preCorrect} dari${preTestQuestions.length} soal benar`;
+
+    document.getElementById("resPostScore").innerText = `${postTestScore.toFixed(0)} / 100`;
+    document.getElementById("resPostCorrect").innerText = `${postCorrect} dari${postTestQuestions.length} soal benar`;
+
+    const gain = postTestScore - preTestScore;
+    let gainText = "";
+    if (gain > 0) {
+        gainText = `Selamat! Terdapat peningkatan nilai sebesar +${gain.toFixed(0)} poin setelah mempelajari Modul Pelatihan Global Mobility & Legal Compliance[cite: 2]. Anda menunjukkan pemahaman yang sangat baik terhadap regulasi rekrutmen etis, penyetaraan lisensi, dan pelindungan hukum perawat[cite: 2].`;
+    } else if (gain === 0) {
+        gainText = "Nilai Pre-Test dan Post-Test Anda sama. Disarankan untuk mengulas kembali modul pelatihan terutama pada aspek audit kontrak kerja dan hukum ketenagakerjaan internasional[cite: 2].";
+    } else {
+        gainText = "Nilai Post-Test Anda mengalami penurunan dibanding Pre-Test. Harap pelajari ulang materi modul secara mendalam[cite: 2].";
+    }
+
+    document.getElementById("resGainText").innerText = gainText;
+    document.getElementById("resultDashboard").style.display = "block";
+    document.getElementById("resultDashboard").scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
 </body>
 </html>
